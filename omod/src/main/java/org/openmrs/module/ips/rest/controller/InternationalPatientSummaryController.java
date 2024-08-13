@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.openmrs.Concept;
 import org.openmrs.Obs;
 import org.openmrs.Person;
-import org.openmrs.api.AdministrationService;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.DatatypeService;
 import org.openmrs.api.ObsService;
 import org.openmrs.api.PersonService;
+import org.openmrs.api.context.Context;
 import org.openmrs.api.db.ClobDatatypeStorage;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.module.webservices.rest.web.response.IllegalRequestException;
@@ -43,9 +43,6 @@ public class InternationalPatientSummaryController extends BaseRestController {
 	PersonService personService;
 	
 	@Autowired
-	AdministrationService administrationService;
-	
-	@Autowired
 	private DatatypeService datatypeService;
 	
 	@RequestMapping(value = "/{uuid}/patientsummary", method = RequestMethod.GET)
@@ -57,7 +54,7 @@ public class InternationalPatientSummaryController extends BaseRestController {
 		List<Person> whom = new ArrayList<>();
 		Person p = personService.getPersonByUuid(uuid);
 		whom.add(p);
-		String ipsconcept = administrationService.getGlobalProperty("ips.concept",
+		String ipsconcept = Context.getAdministrationService().getGlobalProperty("ips.concept",
 				"11557d80-af43-4788-b30c-69bc60489814");
 		Concept c = conceptService.getConceptByUuid(ipsconcept);
 		List<Concept> concepts = new ArrayList<>();
@@ -85,9 +82,10 @@ public class InternationalPatientSummaryController extends BaseRestController {
 	        @RequestParam(required = false, defaultValue = "RAW_VIEW") String view) throws Exception {
 		
 		//String url = "https://dd25f6cb-a999-43b0-b07a-b426bd9d0dc3.mock.pstmn.io/Patient/" + uuid + "/$summary";
-		
-		String url = administrationService.getGlobalProperty("ips.url", "11557d80-af43-4788-b30c-69bc60489814") + uuid
-		        + "/$summary";
+		//To do: pass in the patient ID
+		String url = Context.getAdministrationService().getGlobalProperty("ips.url",
+		    "https://dd25f6cb-a999-43b0-b07a-b426bd9d0dc3.mock.pstmn.io/Patient/")
+		        + 1234 + "/$summary";
 		
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
@@ -102,7 +100,8 @@ public class InternationalPatientSummaryController extends BaseRestController {
 		// create obs
 		
 		Obs obs = new Obs();
-		String ipsconcept = administrationService.getGlobalProperty("ips.concept", "11557d80-af43-4788-b30c-69bc60489814");
+		String ipsconcept = Context.getAdministrationService().getGlobalProperty("ips.concept",
+		    "11557d80-af43-4788-b30c-69bc60489814");
 		obs.setConcept(conceptService.getConceptByUuid(ipsconcept));
 		
 		obs.setValueComplex(randomUuid.toString());
