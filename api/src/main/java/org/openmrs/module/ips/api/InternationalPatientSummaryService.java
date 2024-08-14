@@ -9,16 +9,15 @@
  */
 package org.openmrs.module.ips.api;
 
-import org.openmrs.annotation.Authorized;
-import org.openmrs.api.APIException;
+import java.util.List;
+
 import org.openmrs.api.OpenmrsService;
-import org.openmrs.module.ips.InternationalPatientSummaryConfig;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The main service of this module, which is exposed for other modules. See
  * moduleApplicationContext.xml on how it is wired up.
  */
 public interface InternationalPatientSummaryService extends OpenmrsService {
-
+	
+	List<String> getAllPatientIPS(String uuid) throws Exception;
 }

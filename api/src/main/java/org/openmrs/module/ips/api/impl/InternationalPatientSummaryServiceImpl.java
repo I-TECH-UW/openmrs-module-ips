@@ -9,13 +9,37 @@
  */
 package org.openmrs.module.ips.api.impl;
 
-import org.openmrs.api.APIException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openmrs.Concept;
+import org.openmrs.Obs;
+import org.openmrs.Person;
+import org.openmrs.api.ConceptService;
+import org.openmrs.api.DatatypeService;
+import org.openmrs.api.ObsService;
+import org.openmrs.api.PersonService;
 import org.openmrs.api.UserService;
+import org.openmrs.api.context.Context;
+import org.openmrs.api.db.ClobDatatypeStorage;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.ips.api.InternationalPatientSummaryService;
 import org.openmrs.module.ips.api.dao.InternationalPatientSummaryDao;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class InternationalPatientSummaryServiceImpl extends BaseOpenmrsService implements InternationalPatientSummaryService {
+	
+	@Autowired
+	ObsService obsService;
+	
+	@Autowired
+	ConceptService conceptService;
+	
+	@Autowired
+	PersonService personService;
+	
+	@Autowired
+	private DatatypeService datatypeService;
 	
 	InternationalPatientSummaryDao dao;
 	
@@ -34,5 +58,30 @@ public class InternationalPatientSummaryServiceImpl extends BaseOpenmrsService i
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+	
+	@Override
+	public List<String> getAllPatientIPS(String uuid) throws Exception {
+		List<String> ipStrings = new ArrayList<>();
+		List<Person> whom = new ArrayList<>();
+		Person p = personService.getPersonByUuid(uuid);
+		whom.add(p);
+		String ipsconcept = Context.getAdministrationService().getGlobalProperty("ips.concept");
+		Concept c = conceptService.getConceptByUuid(ipsconcept);
+		List<Concept> concepts = new ArrayList<>();
+		concepts.add(c);
+		List<Obs> obs = obsService.getObservations(whom, null, concepts, null, null, null, null, 10, null, null, null,
+				false);
 
+		for (Obs eachobs : obs) {
+			if (eachobs.getValueComplex() == null) {
+				throw new Exception("Obs doesn't contain complex value");
+			}
+
+			String eachuuid = eachobs.getValueComplex();
+			ClobDatatypeStorage clobData = datatypeService.getClobDatatypeStorageByUuid(eachuuid);
+			String clobValue = clobData.getValue();
+			ipStrings.add(clobValue);
+		}
+		return ipStrings;
+	}
 }

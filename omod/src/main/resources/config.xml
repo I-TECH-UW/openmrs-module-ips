@@ -54,7 +54,7 @@
 	</globalProperty>
 	<globalProperty>
 		<property>@MODULE_ID@.url</property>
-		<defaultValue>https://dd25f6cb-a999-43b0-b07a-b426bd9d0dc3.mock.pstmn.io/Patient/</defaultValue>
+		<defaultValue>https://hapi.fhir.org/baseR4/Patient/$summary</defaultValue>
 		<description>
 			Url for the InternationalPatientSummary.
 		</description>
@@ -106,4 +106,3 @@
 	<!-- /Internationalization -->
 	
 </module>
-
