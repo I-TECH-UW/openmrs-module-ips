@@ -15,12 +15,12 @@ import java.util.List;
 import org.openmrs.Concept;
 import org.openmrs.Obs;
 import org.openmrs.Person;
+import org.openmrs.api.AdministrationService;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.DatatypeService;
 import org.openmrs.api.ObsService;
 import org.openmrs.api.PersonService;
 import org.openmrs.api.UserService;
-import org.openmrs.api.context.Context;
 import org.openmrs.api.db.ClobDatatypeStorage;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.ips.api.InternationalPatientSummaryService;
@@ -40,6 +40,9 @@ public class InternationalPatientSummaryServiceImpl extends BaseOpenmrsService i
 	
 	@Autowired
 	private DatatypeService datatypeService;
+	
+	@Autowired
+	private AdministrationService administrationService;
 	
 	InternationalPatientSummaryDao dao;
 	
@@ -65,7 +68,7 @@ public class InternationalPatientSummaryServiceImpl extends BaseOpenmrsService i
 		List<Person> whom = new ArrayList<>();
 		Person p = personService.getPersonByUuid(uuid);
 		whom.add(p);
-		String ipsconcept = Context.getAdministrationService().getGlobalProperty("ips.concept");
+		String ipsconcept = administrationService.getGlobalProperty("ips.concept");
 		Concept c = conceptService.getConceptByUuid(ipsconcept);
 		List<Concept> concepts = new ArrayList<>();
 		concepts.add(c);
