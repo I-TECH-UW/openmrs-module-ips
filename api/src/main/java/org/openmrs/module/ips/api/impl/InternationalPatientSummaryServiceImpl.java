@@ -26,6 +26,7 @@ import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.ips.api.InternationalPatientSummaryService;
 import org.openmrs.module.ips.api.dao.InternationalPatientSummaryDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 public class InternationalPatientSummaryServiceImpl extends BaseOpenmrsService implements InternationalPatientSummaryService {
 	
@@ -42,6 +43,7 @@ public class InternationalPatientSummaryServiceImpl extends BaseOpenmrsService i
 	private DatatypeService datatypeService;
 	
 	@Autowired
+	@Qualifier("adminService")
 	private AdministrationService administrationService;
 	
 	InternationalPatientSummaryDao dao;

@@ -32,37 +32,35 @@ import org.openmrs.api.db.ClobDatatypeStorage;
 import org.openmrs.module.ips.api.impl.InternationalPatientSummaryServiceImpl;
 
 /**
- * This is a unit test, which verifies logic in
- * InternationalPatientSummaryService. It doesn't
- * extend BaseModuleContextSensitiveTest, thus it is run without the in-memory
- * DB and Spring
+ * This is a unit test, which verifies logic in InternationalPatientSummaryService. It doesn't
+ * extend BaseModuleContextSensitiveTest, thus it is run without the in-memory DB and Spring
  * context.
  */
 public class InternationalPatientSummaryServiceTest {
-
+	
 	@InjectMocks
 	InternationalPatientSummaryServiceImpl basicModuleService;
-
+	
 	@Mock
 	PersonService personService;
-
+	
 	@Mock
 	ObsService obsService;
-
+	
 	@Mock
 	ConceptService conceptService;
-
+	
 	@Mock
 	private DatatypeService datatypeService;
-
+	
 	@Mock
 	private AdministrationService administrationService;
-
+	
 	@Before
 	public void setupMocks() {
 		MockitoAnnotations.openMocks(this);
 	}
-
+	
 	@Test
 	public void getAllPatientIPS_shouldGetAllPatientIPS() throws Exception {
 
