@@ -58,7 +58,7 @@ public class InternationalPatientSummaryServiceTest {
 	
 	@Before
 	public void setupMocks() {
-		MockitoAnnotations.openMocks(this);
+		MockitoAnnotations.initMocks(this);
 	}
 	
 	@Test
