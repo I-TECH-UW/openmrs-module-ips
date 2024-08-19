@@ -7,20 +7,17 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.ips.api;
-
-import java.util.List;
-
-import org.openmrs.api.OpenmrsService;
+package org.openmrs.module.ips;
 
 /**
- * The main service of this module, which is exposed for other modules. See
- * moduleApplicationContext.xml on how it is wired up.
+ * Constants class for InternationalPatientSummary.
  */
-public interface InternationalPatientSummaryService extends OpenmrsService {
+public final class InternationalPatientSummaryConstants {
 	
-	List<String> getAllPatientIPS(String uuid) throws Exception;
+	protected InternationalPatientSummaryConstants() {
+	}
 	
-	void addPatientIPS(String uuid) throws Exception;
+	public static final String IPS_URL_STRING = "ips.url";
 	
+	public static final String IPS_CONCEPT = "ips.concept";
 }

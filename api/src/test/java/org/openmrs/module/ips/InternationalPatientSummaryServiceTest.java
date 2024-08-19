@@ -70,12 +70,12 @@ public class InternationalPatientSummaryServiceTest {
 
 		List<Person> personList = new ArrayList<>();
 		personList.add(person);
-		when(administrationService.getGlobalProperty("ips.concept")).thenReturn("e8a59cac-04fd-42ac-9af1-85928b45c146");
+		when(administrationService.getGlobalProperty(InternationalPatientSummaryConstants.IPS_CONCEPT)).thenReturn("e8a59cac-04fd-42ac-9af1-85928b45c146");
 		Concept c = new Concept();
 		c.setUuid("e8a59cac-04fd-42ac-9af1-85928b45c146");
 		c.isComplex();
 
-		when(conceptService.getConceptByUuid("e8a59cac-04fd-42ac-9af1-85928b45c146")).thenReturn(c);
+		when(conceptService.getConceptByReference("e8a59cac-04fd-42ac-9af1-85928b45c146")).thenReturn(c);
 
 		List<Concept> conceptList = new ArrayList<>();
 		conceptList.add(c);
