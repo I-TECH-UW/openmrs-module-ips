@@ -22,7 +22,11 @@
 	<aware_of_modules>
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
 	</aware_of_modules>
-	
+	<require_modules>
+		<require_module version="${webservices.restVersion}">
+			org.openmrs.module.webservices.rest
+		</require_module>
+	</require_modules>
 	
 	<!-- AOP
 	<advice>
@@ -40,17 +44,22 @@
 	 /Required Privileges -->
 
 
-	<!-- Required Global Properties 
+	<!-- Required Global Properties-->
 	<globalProperty>
-		<property>@MODULE_ID@.someProperty</property>
-		<defaultValue></defaultValue>
+		<property>@MODULE_ID@.concept</property>
+		<defaultValue>11557d80-af43-4788-b30c-69bc60489814</defaultValue>
 		<description>
-			A description of the global property goes here.  The description
-			should explain enough for administrators to understand the purpose
-			and possible values for the global property.
+			UUID for the InternationalPatientSummary concept.
 		</description>
 	</globalProperty>
-	/Required Global Properties -->
+	<globalProperty>
+		<property>@MODULE_ID@.url</property>
+		<defaultValue>https://hapi.fhir.org/baseR4/Patient/$summary</defaultValue>
+		<description>
+			Url for the InternationalPatientSummary.
+		</description>
+	</globalProperty>
+	
 	
 	<!--
 	<dwr>
@@ -97,4 +106,3 @@
 	<!-- /Internationalization -->
 	
 </module>
-
