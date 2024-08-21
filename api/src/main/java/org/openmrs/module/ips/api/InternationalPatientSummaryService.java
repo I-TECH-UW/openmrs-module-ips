@@ -11,7 +11,9 @@ package org.openmrs.module.ips.api;
 
 import java.util.List;
 
+import org.openmrs.annotation.Authorized;
 import org.openmrs.api.OpenmrsService;
+import org.openmrs.util.PrivilegeConstants;
 
 /**
  * The main service of this module, which is exposed for other modules. See
@@ -19,8 +21,10 @@ import org.openmrs.api.OpenmrsService;
  */
 public interface InternationalPatientSummaryService extends OpenmrsService {
 	
+	@Authorized({ PrivilegeConstants.GET_OBS })
 	List<String> getAllPatientIPS(String uuid) throws Exception;
 	
+	@Authorized({ PrivilegeConstants.ADD_OBS, PrivilegeConstants.GET_OBS })
 	void addPatientIPS(String uuid) throws Exception;
 	
 }
