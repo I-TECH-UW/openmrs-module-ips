@@ -59,6 +59,13 @@
 			Url for the InternationalPatientSummary.
 		</description>
 	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.identifiertype.uuid</property>
+		<defaultValue>8d79403a-c2cc-11de-8d13-0010c6dffd0f</defaultValue>
+		<description>
+			Preffered UUID to query the IPS remote server.
+		</description>
+	</globalProperty>
 	
 	
 	<!--

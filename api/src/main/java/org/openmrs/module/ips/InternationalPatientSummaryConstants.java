@@ -20,4 +20,6 @@ public final class InternationalPatientSummaryConstants {
 	public static final String IPS_URL_STRING = "ips.url";
 	
 	public static final String IPS_CONCEPT = "ips.concept";
+	
+	public static final String IPS_PREFFERED_IDENTIFIER_TYPE_UUID = "ips.identifiertype.uuid";
 }
