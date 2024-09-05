@@ -21,5 +21,5 @@ public final class InternationalPatientSummaryConstants {
 	
 	public static final String IPS_CONCEPT = "ips.concept";
 	
-	public static final String IPS_PREFFERED_IDENTIFIER_TYPE_UUID = "ips.identifiertype.uuid";
+	public static final String IPS_PREFERRED_IDENTIFIER_TYPE_UUID = "ips.identifiertype.uuid";
 }

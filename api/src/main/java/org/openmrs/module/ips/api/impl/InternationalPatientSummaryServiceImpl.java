@@ -61,8 +61,6 @@ public class InternationalPatientSummaryServiceImpl extends BaseOpenmrsService i
 	
 	UserService userService;
 	
-	private String ipsconcept;
-	
 	/**
 	 * Injected in moduleApplicationContext.xml
 	 */
@@ -98,7 +96,7 @@ public class InternationalPatientSummaryServiceImpl extends BaseOpenmrsService i
 
 		String url = administrationService.getGlobalProperty(InternationalPatientSummaryConstants.IPS_URL_STRING);
 		String preferredID = administrationService
-				.getGlobalProperty(InternationalPatientSummaryConstants.IPS_PREFFERED_IDENTIFIER_TYPE_UUID);
+				.getGlobalProperty(InternationalPatientSummaryConstants.IPS_PREFERRED_IDENTIFIER_TYPE_UUID);
 		Patient p = Context.getPatientService().getPatientByUuid(uuid);
 
 		PatientIdentifierType pit = Context.getPatientService().getPatientIdentifierTypeByUuid(preferredID);
@@ -145,19 +143,21 @@ public class InternationalPatientSummaryServiceImpl extends BaseOpenmrsService i
 
 		if (obs == null) {
 			obs = new Obs();
-			ipsconcept = administrationService.getGlobalProperty(InternationalPatientSummaryConstants.IPS_CONCEPT);
+			String ipsconcept = administrationService.getGlobalProperty(InternationalPatientSummaryConstants.IPS_CONCEPT);
 			obs.setConcept(conceptService.getConceptByReference(ipsconcept));
 			obs.setValueComplex(clobUuid);
 			obs.setObsDatetime(new Date());
 			obs.setPerson(personService.getPersonByUuid(uuid));
-			obsService.saveObs(obs, "ipsObs");
+			obsService.saveObs(obs, "Create IPS");
+		} else {
+			obs.setObsDatetime(new Date());
+			obsService.saveObs(obs, "Create IPS");
 		}
-
 	}
 	
 	private Obs getIPSObs(String uuid) {
 		Person p = personService.getPersonByUuid(uuid);
-		ipsconcept = administrationService.getGlobalProperty(InternationalPatientSummaryConstants.IPS_CONCEPT);
+		String ipsconcept = administrationService.getGlobalProperty(InternationalPatientSummaryConstants.IPS_CONCEPT);
 		Concept c = conceptService.getConceptByReference(ipsconcept);
 		List<Obs> observations = obsService.getObservationsByPersonAndConcept(p, c);
 		Obs obs = !observations.isEmpty() ? observations.get(observations.size() - 1) : null;
