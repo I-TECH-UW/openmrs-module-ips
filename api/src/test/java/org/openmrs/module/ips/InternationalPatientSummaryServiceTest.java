@@ -68,17 +68,13 @@ public class InternationalPatientSummaryServiceTest {
 		person.setUuid("94dc952d-0803-41b6-aba9-3b85f96f27bf");
 		when(personService.getPersonByUuid("94dc952d-0803-41b6-aba9-3b85f96f27bf")).thenReturn(person);
 
-		List<Person> personList = new ArrayList<>();
-		personList.add(person);
-		when(administrationService.getGlobalProperty(InternationalPatientSummaryConstants.IPS_CONCEPT)).thenReturn("e8a59cac-04fd-42ac-9af1-85928b45c146");
+		when(administrationService.getGlobalProperty(InternationalPatientSummaryConstants.IPS_CONCEPT))
+				.thenReturn("e8a59cac-04fd-42ac-9af1-85928b45c146");
 		Concept c = new Concept();
 		c.setUuid("e8a59cac-04fd-42ac-9af1-85928b45c146");
 		c.isComplex();
 
 		when(conceptService.getConceptByReference("e8a59cac-04fd-42ac-9af1-85928b45c146")).thenReturn(c);
-
-		List<Concept> conceptList = new ArrayList<>();
-		conceptList.add(c);
 
 		Obs obs = new Obs();
 		obs.setConcept(c);
@@ -86,17 +82,17 @@ public class InternationalPatientSummaryServiceTest {
 		obs.setValueComplex("e8a59cac-04fd-42ac-9af1-85928b45c146");
 		List<Obs> obsList = new ArrayList<>();
 		obsList.add(obs);
-		when(obsService.getObservations(personList, null, conceptList, null, null, null, null, 10, null, null, null,
-				false)).thenReturn(obsList);
+
+		when(obsService.getObservationsByPersonAndConcept(person, c)).thenReturn(obsList);
 
 		ClobDatatypeStorage clobData = new ClobDatatypeStorage();
 		clobData.setUuid("e8a59cac-04fd-42ac-9af1-85928b45c146");
 		clobData.setValue("{'id':'patient'}");
 		when(datatypeService.getClobDatatypeStorageByUuid("e8a59cac-04fd-42ac-9af1-85928b45c146")).thenReturn(clobData);
 
-		List<String> output = basicModuleService.getAllPatientIPS("94dc952d-0803-41b6-aba9-3b85f96f27bf");
+		String output = basicModuleService.getIPS("94dc952d-0803-41b6-aba9-3b85f96f27bf");
 
-		assertThat(output.get(0), equalTo("{'id':'patient'}"));
+		assertThat(output, equalTo("{'id':'patient'}"));
 
 	}
 }
